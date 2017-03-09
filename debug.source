@@ -1,0 +1,28 @@
+if [ ! $ANSI_LOADED ]; then
+    . ./ansi.source
+fi
+
+DEBUG_ERROR_COLOR=${DEBUG_ERROR_COLOR:-${ANSIF_RED}}
+DEBUG_WARNING_COLOR=${DEBUG_WARNING_COLOR:-${ANSIF_YELLOW}}
+DEBUG_INFO_COLOR=${DEBUG_INFO_COLOR:-${ANSIF_WHITE}}
+
+debug() {
+    local level="[${1}]"
+    local message="${2}"
+    local color=DEBUG_${1}_COLOR
+    eval color=\$$color
+    color=${color:-${ANSIF_WHITE}}
+    printf '%s%-9s %s\n' "${color}" "${level}" "${message}${ANSI_NORMAL}"
+}
+
+debugError() {
+    debug ERROR "${1}"
+}
+
+debugWarning() {
+    debug WARNING "${1}"
+}
+
+debugInfo() {
+    debug INFO "${1}"
+}

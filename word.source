@@ -1,0 +1,43 @@
+function countOccurrences() {
+    local sep=${2:-'.'}
+    echo "${1}" | tr -dc ${sep} | wc -m
+}
+
+#1 text
+#2 index
+#3 delimiter
+function normalizeIndex() {
+    local index=${2:-0}
+    local delimiter=${3:-'.'}
+    if [ ${index} -lt 0 ]; then
+        local count=$(countOccurrences "${1}" "${delimiter}")
+        index=$((${count}+${index}+2))
+    fi
+    echo "${index}"
+}
+
+#1 text
+#2 index
+#3 delimiter
+function nthWord() {
+    local delimiter=${3:-'.'}
+    local index=$(normalizeIndex "${1}" "${2}" "${delimiter}")
+    echo "${1}" | cut -d"${delimiter}" -f${index}
+}
+
+function leftWord() {
+    nthWord "${1}" 1 "${2}"
+}
+
+function rightWord() {
+    nthWord "${1}" -1 "${2}"
+}
+
+
+#1 text
+#2 delimiter
+function middleWord() {
+    local delimiter=${2:-'.'}
+    local count=$(countOccurrences "${1}" "${delimiter}")
+    echo "${1}" | cut -d"${delimiter}" -f2-${count}
+}

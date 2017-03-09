@@ -1,0 +1,11 @@
+#apt install ncurses ncurses_utils
+
+ANSIF_BLACK=$(tput setaf 0)
+ANSIF_RED=$(tput setaf 1)
+ANSIF_GREEN=$(tput setaf 2)
+ANSIF_YELLOW=$(tput setaf 3)
+ANSIF_WHITE=$(tput setaf 7)
+ANSI_NORMAL=$(tput sgr0)
+
+ANSI_COLORS=$(tput colors)
+ANSI_LOADED=1

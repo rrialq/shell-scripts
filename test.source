@@ -1,0 +1,9 @@
+assertEquals() {
+    local message="Test ${1}: "
+    if [ ! "${2}" = "${3}" ]; then
+        message="${message} (${4:-""${2} != ${3}""})"
+        debugError "${message}"
+    else
+        debugInfo "${message} OK"
+    fi
+}
