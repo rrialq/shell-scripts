@@ -1,6 +1,6 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
-. ./ansi.source
+. ./console.source
 
 . ./debug.source
 . ./word.source
@@ -34,4 +34,4 @@ assertEquals '   nthWord' 'ss' $(nthWord ${filename} '' '-')
 assertEquals 'nthWord  5' '' $(nthWord ${filename} 5 '-')
 assertEquals 'nthWord -7' 'ss-b' $(nthWord ${filename} -7 '-')
 
-ansi_demo
+console_demo
