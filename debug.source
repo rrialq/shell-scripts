@@ -1,5 +1,5 @@
 if [ ! $TEXT_LOADED ]; then
-    . ./ansi.source
+    . ./console.source
 fi
 
 DEBUG_ERROR_COLOR=${DEBUG_ERROR_COLOR:-${COLOR['red']}}
