@@ -1,57 +1,41 @@
 #apt install ncurses ncurses_utils
 
-if [ "${CONSOLE_LOADED}" = "" ]; then
-    declare -A COLOR
-    declare -A BACKGROUND
-    declare -A STYLE
-    declare -A SEPARATOR
 
-    trap 'screen_onResize' WINCH
-    tput_cmd=$(which tput)
-    
-    if [ -x ${tput_cmd} ] && tput setaf 1 &> /dev/null; then
-        colors=(black red green yellow blue magenta cyan white)
-        for (( i=0; i < ${#colors[@]}; i++ )); do
-            key="${colors[i]}"
-            COLOR["${key}"]=$( tput setaf ${i} )
-            COLOR["${key}l"]=$( tput setaf $(( $i + 8)) )
-            BACKGROUND["${key}"]=$( tput setab ${i} )
-            BACKGROUND["${key}l"]=$( tput setab $(( $i + 8)) )
-        done
+hideCursor() {
+    tput civis
+}
 
-        STYLE['normal']=$(tput sgr0)
-        STYLE['bold']=$(tput bold)
-        STYLE['dim']=$(tput dim)
-        STYLE['under']=$(tput smul)
-        STYLE['reverse']=$(tput rev)
-        STYLE['standout']=$(tput smso)
-        STYLE['dlob']=${STYLE['normal']}
-        STYLE['mid']=${STYLE['normal']}
-        STYLE['rednu']=$(tput rmul)
-        STYLE['esrever']=${STYLE['normal']}
-        STYLE['tuodnats']=$(tput rmso)
-    else
-        STYLE['normal']="\e[0m"
-        STYLE['bold']="\e[1m"
-        STYLE['dim']='\e[2m'
-        STYLE['under']='\e[4m'
-        STYLE['blink']='\e[5m'
-        STYLE['reverse']='\e[7m'
-        STYLE['hidden']='\e[8m'
-        STYLE['dlob']="\e[21m"
-        STYLE['min']='\e[22m'
-        STYLE['rednu']='\e[24m'
-        STYLE['knilb']='\e[25m'
-        STYLE['esrever']='\e[27m'
-        STYLE['neddih']='\e[28m'
-        
-        for (( i=0; i < ${#colors[@]}; i++ )); do
-            key="${colors[i]}"
-            COLOR["${key}"]="\e[1;$((30 + $i))m"
-            BACKGROUND["${key}"]="\e[1;$((40 + $i))m"
-        done     
-    fi
-fi
+showCursor() {
+    tput cnorm
+}
+
+# $1 = Separayor style. Default value: normal.
+# $2 = Separator color.
+printSeparator() {
+    printf "${2}${SEPARATOR[${1:-normal}]}"
+}
+
+# $2 = Separator color.
+printTitle() {
+    local width=$(tput cols)
+    printSeparator 'top' "${2}"
+    printf "\u2503 %-$(($width-3))s\u2503\n" "${1}"
+    printSeparator 'bottom'
+}
+
+screen_onResize() {
+    local separator=''
+    ROWS=$(tput lines)
+    COLS=$(tput cols)
+    for i in `seq 1 $(( $COLS - 2))`; do
+        separator="${separator}\u2501"
+    done
+    SEPARATOR['top']="\u250f${separator}\u2513\n"
+    SEPARATOR['normal']="\u2501${separator}\u2501\n"
+    SEPARATOR['middle']="\u2523${separator}\u252b\n"
+    SEPARATOR['bottom']="\u2517${separator}\u251b\n"
+    return 0
+}
 
 console_demo() {
     printTitle 'Color demo' ${COLOR['white']}
@@ -80,43 +64,59 @@ console_demo() {
     printf "${STYLE['normal']}\n\n"
 }
 
-hideCursor() {
-    tput civis
-}
 
-showCursor() {
-    tput cnorm
-}
-
-printSeparator() {
-    printf "${SEPARATOR_UNDERLINE}\n"
-}
-
-# $2 = Color bordes
-printTitle() {
-    local width=$(tput cols)
-    printf "${2}"
-    printf ${SEPARATOR['top']}
-    printf "\u2503 %-$(($width-3))s\u2503\n" "${1}"
-    printf ${SEPARATOR['bottom']}
-}
-
-screen_onResize() {
-    local separator=''
-    ROWS=$(tput lines)
-    COLS=$(tput cols)
-    for i in `seq 1 $(( $COLS - 2))`; do
-        separator="${separator}\u2501"
-    done
-    SEPARATOR['top']="\u250f${separator}\u2513\n"
-    SEPARATOR['normal']="\u2501${separator}\u2501\n"
-    SEPARATOR['middle']="\u2523${separator}\u252b\n"
-    SEPARATOR['bottom']="\u2517${separator}\u251b\n"
-    return 0
-}
-
-if [ "${CONSOLE_LOADED}" = "" ]; then
+if [ "${CONSOLE_LOADED}" = '' ]; then
+    declare -A COLOR
+    declare -A BACKGROUND
+    declare -A STYLE
+    declare -A SEPARATOR
+    
     CONSOLE_LOADED="true"
+    trap 'screen_onResize' WINCH
+    if ! [ "${CONSOLE_COLORS_ENABLED}" = 'false' ]; then
+        tput_cmd=$(which tput)
+        if [ -x ${tput_cmd} ] && tput setaf 1 &> /dev/null; then
+            colors=(black red green yellow blue magenta cyan white)
+            for (( i=0; i < ${#colors[@]}; i++ )); do
+                key="${colors[i]}"
+                COLOR["${key}"]=$( tput setaf ${i} )
+                COLOR["${key}l"]=$( tput setaf $(( $i + 8)) )
+                BACKGROUND["${key}"]=$( tput setab ${i} )
+                BACKGROUND["${key}l"]=$( tput setab $(( $i + 8)) )
+            done
+    
+            STYLE['normal']=$(tput sgr0)
+            STYLE['bold']=$(tput bold)
+            STYLE['dim']=$(tput dim)
+            STYLE['under']=$(tput smul)
+            STYLE['reverse']=$(tput rev)
+            STYLE['standout']=$(tput smso)
+            STYLE['dlob']=${STYLE['normal']}
+            STYLE['mid']=${STYLE['normal']}
+            STYLE['rednu']=$(tput rmul)
+            STYLE['esrever']=${STYLE['normal']}
+            STYLE['tuodnats']=$(tput rmso)
+        else
+            STYLE['normal']="\e[0m"
+            STYLE['bold']="\e[1m"
+            STYLE['dim']='\e[2m'
+            STYLE['under']='\e[4m'
+            STYLE['blink']='\e[5m'
+            STYLE['reverse']='\e[7m'
+            STYLE['hidden']='\e[8m'
+            STYLE['dlob']="\e[21m"
+            STYLE['min']='\e[22m'
+            STYLE['rednu']='\e[24m'
+            STYLE['knilb']='\e[25m'
+            STYLE['esrever']='\e[27m'
+            STYLE['neddih']='\e[28m'
+            
+            for (( i=0; i < ${#colors[@]}; i++ )); do
+                key="${colors[i]}"
+                COLOR["${key}"]="\e[1;$((30 + $i))m"
+                BACKGROUND["${key}"]="\e[1;$((40 + $i))m"
+            done     
+        fi
+    fi
     screen_onResize
-    printSeparator
 fi

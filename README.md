@@ -1,2 +1,4 @@
 # shell-scripts
-In progress
+
+* **console.source**: functions and constants related to screen.
+* **debug.source**: minimal set of functions to print debug messages.

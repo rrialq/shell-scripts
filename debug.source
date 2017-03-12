@@ -1,28 +1,33 @@
-if [ ! $TEXT_LOADED ]; then
-    . ./console.source
+. ./console.source
+
+if [ -z ${DEBUG_LOADED+x} ]; then
+    declare -A DEBUG_COLOR
+    DEBUG_LOADED='true'
+    DEBUG_COLOR['ERROR']=${DEBUG_ERROR_COLOR:-${COLOR['red']}}
+    DEBUG_COLOR['WARNING']=${DEBUG_WARNING_COLOR:-${COLOR['yellow']}}
+    DEBUG_COLOR['INFO']=${DEBUG_INFO_COLOR:-${COLOR['green']}}
 fi
 
-DEBUG_ERROR_COLOR=${DEBUG_ERROR_COLOR:-${COLOR['red']}}
-DEBUG_WARNING_COLOR=${DEBUG_WARNING_COLOR:-${COLOR['yellow']}}
-DEBUG_INFO_COLOR=${DEBUG_INFO_COLOR:-${COLOR['green']}}
-
+# $1 = Message
+# $2 = Debug level. Default=INFO.
 debug() {
-    local level="[${1}]"
-    local message="${2}"
-    local color=DEBUG_${1}_COLOR
-    eval color=\$$color
-    color=${color:-${COLOR['white']}}
-    printf '%s%-9s %s\n' "${color}" "${level}" "${message}${TEXT_NORMAL}"
+    local level=${2:-INFO}
+    local color=${DEBUG_COLOR[${level}]}
+    if [ "${color}" = "" ]; then
+        level='INFO'
+        color=${DEBUG_COLOR['INFO']}
+    fi
+    printf '%s%-9s %s\n' "${color}" "[${level}]" "${1}${TEXT_NORMAL}"
 }
 
 debugError() {
-    debug ERROR "${1}"
+    debug "${1}" ERROR
 }
 
 debugWarning() {
-    debug WARNING "${1}"
+    debug "${1}" WARNING
 }
 
 debugInfo() {
-    debug INFO "${1}"
+    debug "${1}" INFO
 }

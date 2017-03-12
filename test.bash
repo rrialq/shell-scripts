@@ -1,7 +1,6 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
 . ./console.source
-
 . ./debug.source
 . ./word.source
 . ./test.source
@@ -20,7 +19,7 @@ assertEquals '   nthWord' 'ss' $(nthWord ${filename})
 assertEquals 'nthWord  5' '' $(nthWord ${filename} 5)
 assertEquals 'nthWord -7' 'ss.b' $(nthWord ${filename} -7)
 
-printf "${SEPARATOR_UNDERLINE}"
+printf "${SEPARATOR['normal']}"
 
 filename='ss-b-jndi-create'
 debugWarning "TestCase ${filename}"
