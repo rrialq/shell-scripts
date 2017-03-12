@@ -1,7 +1,5 @@
 #apt install ncurses ncurses_utils
 
-
-
 if [ "${ANSI_LOADED}" = "" ]; then
     declare -A COLOR
     declare -A BACKGROUND
@@ -12,41 +10,14 @@ if [ "${ANSI_LOADED}" = "" ]; then
     tput_cmd=$(which tput)
     
     if [ -x ${tput_cmd} ] && tput setaf 1 &> /dev/null; then
-        COLOR['black']=$(tput setaf 0)
-        COLOR['red']=$(tput setaf 1)
-        COLOR['green']=$(tput setaf 2)
-        COLOR['yellow']=$(tput setaf 3)
-        COLOR['blue']=$(tput setaf 4)
-        COLOR['magenta']=$(tput setaf 5)
-        COLOR['cyan']=$(tput setaf 6)
-        COLOR['white']=$(tput setaf 7)
-        #Light colors
-        COLOR['blackl']=$(tput setaf 8)
-        COLOR['redl']=$(tput setaf 9)
-        COLOR['greenl']=$(tput setaf 10)
-        COLOR['yellow'l]=$(tput setaf 11)
-        COLOR['bluel']=$(tput setaf 12)
-        COLOR['magental']=$(tput setaf 13)
-        COLOR['cyanl']=$(tput setaf 14)
-        COLOR['whitel']=$(tput setaf 15)
-
-        BACKGROUND['black']=$(tput setaf 0)
-        BACKGROUND['red']=$(tput setaf 1)
-        BACKGROUND['green']=$(tput setaf 2)
-        BACKGROUND['yellow']=$(tput setaf 3)
-        BACKGROUND['blue']=$(tput setaf 4)
-        BACKGROUND['magenta']=$(tput setaf 5)
-        BACKGROUND['cyan']=$(tput setaf 6)
-        BACKGROUND['white']=$(tput setaf 7)
-        #Light background colors
-        BACKGROUND['blackl']=$(tput setaf 8)
-        BACKGROUND['redl']=$(tput setaf 9)
-        BACKGROUND['greenl']=$(tput setaf 10)
-        BACKGROUND['yellowl']=$(tput setaf 11)
-        BACKGROUND['bluel']=$(tput setaf 12)
-        BACKGROUND['magental']=$(tput setaf 13)
-        BACKGROUND['cyanl']=$(tput setaf 14)
-        BACKGROUND['whitel']=$(tput setaf 15)
+        colors=(black red green yellow blue magenta cyan white)
+        for (( i=0; i < ${#colors[@]}; i++ )); do
+            key="${colors[i]}"
+            COLOR["${key}"]=$( tput setaf ${i} )
+            COLOR["${key}l"]=$( tput setaf $(( $i + 8)) )
+            BACKGROUND["${key}"]=$( tput setab ${i} )
+            BACKGROUND["${key}l"]=$( tput setab $(( $i + 8)) )
+        done
 
         STYLE['normal']=$(tput sgr0)
         STYLE['bold']=$(tput bold)
@@ -74,23 +45,11 @@ if [ "${ANSI_LOADED}" = "" ]; then
         STYLE['esrever']='\e[27m'
         STYLE['neddih']='\e[28m'
         
-        COLOR['black']='\e[1;30m'
-        COLOR['red']='\e[1;31m'
-        COLOR['green']='\e[1;32m'
-        COLOR['yellow']='\e[1;33m' 
-        COLOR['blue']='\e[1;34m'
-        COLOR['magenta']='\e[1;35m'
-        COLOR['cyan']='\e[1;36m'
-        COLOR['white']='\e[1;37m'
-        
-        BACKGROUND['black']='\e[1;40m'
-        BACKGROUND['red']='\e[1;41m'
-        BACKGROUND['green']='\e[1;42m'
-        BACKGROUND['yellow']='\e[1;43m' 
-        BACKGROUND['blue']='\e[1;44m'
-        BACKGROUND['magenta']='\e[1;45m'
-        BACKGROUND['cyan']='\e[1;46m'
-        BACKGROUND['white']='\e[1;47m'        
+        for (( i=0; i < ${#colors[@]}; i++ )); do
+            key="${colors[i]}"
+            COLOR["${key}"]="\e[1;$((30 + $i))m"
+            BACKGROUND["${key}"]="\e[1;$((40 + $i))m"
+        done     
     fi
 fi
 
