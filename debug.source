@@ -2,16 +2,16 @@ if [ ! $TEXT_LOADED ]; then
     . ./ansi.source
 fi
 
-DEBUG_ERROR_COLOR=${DEBUG_ERROR_COLOR:-${COLOR_RED}}
-DEBUG_WARNING_COLOR=${DEBUG_WARNING_COLOR:-${COLOR_YELLOW}}
-DEBUG_INFO_COLOR=${DEBUG_INFO_COLOR:-${COLOR_GREEN}}
+DEBUG_ERROR_COLOR=${DEBUG_ERROR_COLOR:-${COLOR['red']}}
+DEBUG_WARNING_COLOR=${DEBUG_WARNING_COLOR:-${COLOR['yellow']}}
+DEBUG_INFO_COLOR=${DEBUG_INFO_COLOR:-${COLOR['green']}}
 
 debug() {
     local level="[${1}]"
     local message="${2}"
     local color=DEBUG_${1}_COLOR
     eval color=\$$color
-    color=${color:-${COLOR_WHITE}}
+    color=${color:-${COLOR['white']}}
     printf '%s%-9s %s\n' "${color}" "${level}" "${message}${TEXT_NORMAL}"
 }
 
