@@ -39,21 +39,10 @@ screen_onResize() {
 
 console_demo() {
     printTitle 'Color demo' ${COLOR['white']}
-    printf "${COLOR['red']}Red "
-    printf "${COLOR['green']}Green "
-    printf "${COLOR['yellow']}Yellow "
-    printf "${COLOR['blue']}Blue "
-    printf "${COLOR['magenta']}Magenta "
-    printf "${COLOR['cyan']}Cyan "
-    printf "${COLOR['white']}White${STYLE['normal']}\n"
-    
-    printf "${COLOR['redl']}Red "
-    printf "${COLOR['greenl']}Green "
-    printf "${COLOR['yellowl']}Yellow "
-    printf "${COLOR['bluel']}Blue "
-    printf "${COLOR['magental']}Magenta "
-    printf "${COLOR['cyanl']}Cyan "
-    printf "${COLOR['whitel']}White${STYLE['normal']}\n"
+    for color in ${COLORS[@]}; do
+        printf "${COLOR[${color}]}${color^} ${COLOR[${color}l]}${color^} "
+    done
+    printf "${STYLE['normal']}\n"
     
     printf "${STYLE['bold']}Bold${STYLE['dlob']} "
     printf "${STYLE['dim']}Dim${STYLE['mid']} "
@@ -76,9 +65,9 @@ if [ "${CONSOLE_LOADED}" = '' ]; then
     if ! [ "${CONSOLE_COLORS_ENABLED}" = 'false' ]; then
         tput_cmd=$(which tput)
         if [ -x ${tput_cmd} ] && tput setaf 1 &> /dev/null; then
-            colors=(black red green yellow blue magenta cyan white)
-            for (( i=0; i < ${#colors[@]}; i++ )); do
-                key="${colors[i]}"
+            COLORS=(black red green yellow blue magenta cyan white)
+            for (( i=0; i < ${#COLORS[@]}; i++ )); do
+                key="${COLORS[i]}"
                 COLOR["${key}"]=$( tput setaf ${i} )
                 COLOR["${key}l"]=$( tput setaf $(( $i + 8)) )
                 BACKGROUND["${key}"]=$( tput setab ${i} )
@@ -111,8 +100,8 @@ if [ "${CONSOLE_LOADED}" = '' ]; then
             STYLE['esrever']='\e[27m'
             STYLE['neddih']='\e[28m'
             
-            for (( i=0; i < ${#colors[@]}; i++ )); do
-                key="${colors[i]}"
+            for (( i=0; i < ${#COLORS[@]}; i++ )); do
+                key="${COLORS[i]}"
                 COLOR["${key}"]="\e[1;$((30 + $i))m"
                 BACKGROUND["${key}"]="\e[1;$((40 + $i))m"
             done     
