@@ -3,9 +3,9 @@
 if [ -z ${DEBUG_LOADED+x} ]; then
     declare -A DEBUG_COLOR
     DEBUG_LOADED='true'
-    DEBUG_COLOR['ERROR']=${DEBUG_ERROR_COLOR:-${COLOR['red']}}
-    DEBUG_COLOR['WARNING']=${DEBUG_WARNING_COLOR:-${COLOR['yellow']}}
-    DEBUG_COLOR['INFO']=${DEBUG_INFO_COLOR:-${COLOR['green']}}
+    DEBUG_COLOR[ERROR]=${DEBUG_ERROR_COLOR:-${COLOR[red]}}
+    DEBUG_COLOR[WARNING]=${DEBUG_WARNING_COLOR:-${COLOR[yellow]}}
+    DEBUG_COLOR[INFO]=${DEBUG_INFO_COLOR:-${COLOR[green]}}
 fi
 
 # $1 = Message
@@ -15,7 +15,7 @@ debug() {
     local color=${DEBUG_COLOR[${level}]}
     if [ "${color}" = "" ]; then
         level='INFO'
-        color=${DEBUG_COLOR['INFO']}
+        color=${DEBUG_COLOR[INFO]}
     fi
     printf '%s%-9s %s\n' "${color}" "[${level}]" "${1}${TEXT_NORMAL}"
 }

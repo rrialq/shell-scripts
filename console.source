@@ -30,27 +30,27 @@ screen_onResize() {
     for i in `seq 1 $(( $COLS - 2))`; do
         separator="${separator}\u2501"
     done
-    SEPARATOR['top']="\u250f${separator}\u2513\n"
-    SEPARATOR['normal']="\u2501${separator}\u2501\n"
-    SEPARATOR['middle']="\u2523${separator}\u252b\n"
-    SEPARATOR['bottom']="\u2517${separator}\u251b\n"
+    SEPARATOR[top]="\u250f${separator}\u2513\n"
+    SEPARATOR[normal]="\u2501${separator}\u2501\n"
+    SEPARATOR[middle]="\u2523${separator}\u252b\n"
+    SEPARATOR[bottom]="\u2517${separator}\u251b\n"
     return 0
 }
 
 console_demo() {
-    printTitle 'Color demo' ${COLOR['white']}
+    printTitle 'Color demo' ${COLOR[white]}
     for color in ${COLORS[@]}; do
         printf "${COLOR[${color}]}${color^} ${COLOR[${color}l]}${color^} "
     done
     printf "${STYLE['normal']}\n"
     
-    printf "${STYLE['bold']}Bold${STYLE['dlob']} "
-    printf "${STYLE['dim']}Dim${STYLE['mid']} "
-    printf "${STYLE['under']}Underline${STYLE['rednu']} "
-    printf "${STYLE['reverse']}Reverse${STYLE['esrever']} "
-    printf "${STYLE['standout']}Standout${STYLE['tuodnats']} "
+    printf "${STYLE[bold]}Bold${STYLE[dlob]} "
+    printf "${STYLE[dim]}Dim${STYLE[mid]} "
+    printf "${STYLE[under]}Underline${STYLE[rednu]} "
+    printf "${STYLE[reverse]}Reverse${STYLE[esrever]} "
+    printf "${STYLE[standout]}Standout${STYLE[tuodnats]} "
     
-    printf "${STYLE['normal']}\n\n"
+    printf "${STYLE[normal]}\n\n"
 }
 
 
@@ -67,43 +67,43 @@ if [ "${CONSOLE_LOADED}" = '' ]; then
         if [ -x ${tput_cmd} ] && tput setaf 1 &> /dev/null; then
             COLORS=(black red green yellow blue magenta cyan white)
             for (( i=0; i < ${#COLORS[@]}; i++ )); do
-                key="${COLORS[i]}"
-                COLOR["${key}"]=$( tput setaf ${i} )
-                COLOR["${key}l"]=$( tput setaf $(( $i + 8)) )
-                BACKGROUND["${key}"]=$( tput setab ${i} )
-                BACKGROUND["${key}l"]=$( tput setab $(( $i + 8)) )
+                key=${COLORS[i]}
+                COLOR[${key}]=$( tput setaf ${i} )
+                COLOR[${key}l]=$( tput setaf $(( $i + 8)) )
+                BACKGROUND[${key}]=$( tput setab ${i} )
+                BACKGROUND[${key}l]=$( tput setab $(( $i + 8)) )
             done
     
-            STYLE['normal']=$(tput sgr0)
-            STYLE['bold']=$(tput bold)
-            STYLE['dim']=$(tput dim)
-            STYLE['under']=$(tput smul)
-            STYLE['reverse']=$(tput rev)
-            STYLE['standout']=$(tput smso)
-            STYLE['dlob']=${STYLE['normal']}
-            STYLE['mid']=${STYLE['normal']}
-            STYLE['rednu']=$(tput rmul)
-            STYLE['esrever']=${STYLE['normal']}
-            STYLE['tuodnats']=$(tput rmso)
+            STYLE[normal]=$(tput sgr0)
+            STYLE[bold]=$(tput bold)
+            STYLE[dim]=$(tput dim)
+            STYLE[under]=$(tput smul)
+            STYLE[reverse]=$(tput rev)
+            STYLE[standout]=$(tput smso)
+            STYLE[dlob]=${STYLE[normal]}
+            STYLE[mid]=${STYLE[normal]}
+            STYLE[rednu]=$(tput rmul)
+            STYLE[esrever]=${STYLE[normal]}
+            STYLE[tuodnats]=$(tput rmso)
         else
-            STYLE['normal']="\e[0m"
-            STYLE['bold']="\e[1m"
-            STYLE['dim']='\e[2m'
-            STYLE['under']='\e[4m'
-            STYLE['blink']='\e[5m'
-            STYLE['reverse']='\e[7m'
-            STYLE['hidden']='\e[8m'
-            STYLE['dlob']="\e[21m"
-            STYLE['min']='\e[22m'
-            STYLE['rednu']='\e[24m'
-            STYLE['knilb']='\e[25m'
-            STYLE['esrever']='\e[27m'
-            STYLE['neddih']='\e[28m'
+            STYLE[normal]="\e[0m"
+            STYLE[bold]="\e[1m"
+            STYLE[dim]='\e[2m'
+            STYLE[under]='\e[4m'
+            STYLE[blink]='\e[5m'
+            STYLE[reverse]='\e[7m'
+            STYLE[hidden]='\e[8m'
+            STYLE[dlob]="\e[21m"
+            STYLE[min]='\e[22m'
+            STYLE[rednu]='\e[24m'
+            STYLE[knilb]='\e[25m'
+            STYLE[esrever]='\e[27m'
+            STYLE[neddih]='\e[28m'
             
             for (( i=0; i < ${#COLORS[@]}; i++ )); do
                 key="${COLORS[i]}"
-                COLOR["${key}"]="\e[1;$((30 + $i))m"
-                BACKGROUND["${key}"]="\e[1;$((40 + $i))m"
+                COLOR[${key}]="\e[1;$((30 + $i))m"
+                BACKGROUND[${key}]="\e[1;$((40 + $i))m"
             done     
         fi
     fi
