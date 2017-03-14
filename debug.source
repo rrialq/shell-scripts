@@ -60,6 +60,7 @@ debugPrint() {
 }
 
 debug_demo() {
+    debugPrint DISABLED
     debugPrint ERROR
     debugPrint WARNING
     debugPrint INFO
