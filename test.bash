@@ -34,3 +34,4 @@ assertEquals 'nthWord  5' '' $(nthWord ${filename} 5 '-')
 assertEquals 'nthWord -7' 'ss-b' $(nthWord ${filename} -7 '-')
 
 console_demo
+debug_demo

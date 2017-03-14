@@ -60,7 +60,7 @@ if [ "${CONSOLE_LOADED}" = '' ]; then
     declare -A STYLE
     declare -A SEPARATOR
     
-    CONSOLE_LOADED="true"
+    CONSOLE_LOADED=1
     trap 'screen_onResize' WINCH
     if ! [ "${CONSOLE_COLORS_ENABLED}" = 'false' ]; then
         tput_cmd=$(which tput)
@@ -86,8 +86,8 @@ if [ "${CONSOLE_LOADED}" = '' ]; then
             STYLE[esrever]=${STYLE[normal]}
             STYLE[tuodnats]=$(tput rmso)
         else
-            STYLE[normal]="\e[0m"
-            STYLE[bold]="\e[1m"
+            STYLE[normal]='\e[0m'
+            STYLE[bold]='\e[1m'
             STYLE[dim]='\e[2m'
             STYLE[under]='\e[4m'
             STYLE[blink]='\e[5m'
@@ -101,7 +101,7 @@ if [ "${CONSOLE_LOADED}" = '' ]; then
             STYLE[neddih]='\e[28m'
             
             for (( i=0; i < ${#COLORS[@]}; i++ )); do
-                key="${COLORS[i]}"
+                key=${COLORS[i]}
                 COLOR[${key}]="\e[1;$((30 + $i))m"
                 BACKGROUND[${key}]="\e[1;$((40 + $i))m"
             done     
