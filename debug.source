@@ -13,11 +13,7 @@ debug() {
     if ! [ "${level}" = DISABLED ]; then 
         local levelValue=${DEBUG_LEVEL_VALUE[${level}]}
         if [ ${DEBUG_LEVEL} -ge ${levelValue} ]; then
-            if [ ${DEBUG_HIDE_LEVEL} -eq 1 ]; then
-                printf '%s%s\n' ${color} "${1}${STYLE[normal]}"
-            else
-                printf '%s%-10s%s\n' ${color} [${level}] "${1}${STYLE[normal]}"
-            fi
+            printf ${DEBUG_FORMAT} ${color} [${level}] "${1}${STYLE[normal]}"
         fi
     fi
 }
@@ -62,6 +58,13 @@ debugPrint() {
     done
     DEBUG_LEVEL=${lastLevel}
 }
+debugSetFormat() {
+    local newFormat=${DEBUG_FORMATS[${1:-NORMAL}]}
+    if [ "${newFormat}" = '' ]; then
+        newFormat=${DEBUG_FORMATS[NORMAL]}
+    fi
+    DEBUG_FORMAT=${newFormat}
+}
 
 debug_demo() {
     printTitle 'Debug levels demo'
@@ -72,24 +75,17 @@ debug_demo() {
 
 
 if [ -z ${DEBUG_LOADED+x} ]; then
-    declare -A DEBUG_COLOR
-    declare -A DEBUG_LEVEL_VALUE
+    declare -A DEBUG_COLOR=([DISABLED]=${DEBUG_ERROR_COLOR:-${COLOR[blackl]}} \
+        [ERROR]=${DEBUG_ERROR_COLOR:-${COLOR[red]}} \
+        [WARNING]=${DEBUG_WARNING_COLOR:-${COLOR[yellow]}} \
+        [INFO]=${DEBUG_INFO_COLOR:-${COLOR[green]}} \
+        [FINE]=${DEBUG_FINE_COLOR:-${COLOR[cyan]}} \
+        [FINEST]=${DEBUG_FINEST_COLOR:-${COLOR[blue]}})
+    declare -A DEBUG_LEVEL_VALUE=([DISABLED]=-1 [ERROR]=0 [WARNING]=1 [INFO]=2 [FINE]=3 [FINEST]=4)
     declare -a DEBUG_LEVELS=(DISABLED ERROR WARNING INFO FINE FINEST)
+    declare -A DEBUG_FORMATS=([NO_LEVEL]='%s%.s%s\n' [NORMAL]='%s%-10s%s\n')
     DEBUG_LOADED=1
-    DEBUG_COLOR[DISABLED]=${DEBUG_ERROR_COLOR:-${COLOR[blackl]}}
-    DEBUG_COLOR[ERROR]=${DEBUG_ERROR_COLOR:-${COLOR[red]}}
-    DEBUG_COLOR[WARNING]=${DEBUG_WARNING_COLOR:-${COLOR[yellow]}}
-    DEBUG_COLOR[INFO]=${DEBUG_INFO_COLOR:-${COLOR[green]}}
-    DEBUG_COLOR[FINE]=${DEBUG_FINE_COLOR:-${COLOR[cyan]}}
-    DEBUG_COLOR[FINEST]=${DEBUG_FINEST_COLOR:-${COLOR[blue]}}
-
-    DEBUG_LEVEL_VALUE[DISABLED]=-1
-    DEBUG_LEVEL_VALUE[ERROR]=0
-    DEBUG_LEVEL_VALUE[WARNING]=1
-    DEBUG_LEVEL_VALUE[INFO]=2
-    DEBUG_LEVEL_VALUE[FINE]=3
-    DEBUG_LEVEL_VALUE[FINEST]=4
-
-    DEBUG_HIDE_LEVEL=1
+    
+    debugSetFormat NO_LEVEL
     debugLevel INFO
 fi
