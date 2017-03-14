@@ -13,7 +13,11 @@ debug() {
     if ! [ "${level}" = DISABLED ]; then 
         local levelValue=${DEBUG_LEVEL_VALUE[${level}]}
         if [ ${DEBUG_LEVEL} -ge ${levelValue} ]; then
-            printf '%s%-10s%s\n' ${color} [${level}] "${1}${STYLE[normal]}"
+            if [ ${DEBUG_HIDE_LEVEL} -eq 1 ]; then
+                printf '%s%s\n' ${color} "${1}${STYLE[normal]}"
+            else
+                printf '%s%-10s%s\n' ${color} [${level}] "${1}${STYLE[normal]}"
+            fi
         fi
     fi
 }
@@ -86,5 +90,6 @@ if [ -z ${DEBUG_LOADED+x} ]; then
     DEBUG_LEVEL_VALUE[FINE]=3
     DEBUG_LEVEL_VALUE[FINEST]=4
 
+    DEBUG_HIDE_LEVEL=1
     debugLevel INFO
 fi
