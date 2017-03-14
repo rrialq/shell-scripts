@@ -18,7 +18,7 @@ printSeparator() {
 # $2 = Separator color.
 printTitle() {
     local width=$(tput cols)
-    printSeparator 'top' "${2}"
+    printSeparator top "${2}"
     printf "\u2503 %-$(($width-3))s\u2503\n" "${1}"
     printSeparator 'bottom'
 }
@@ -38,12 +38,13 @@ screen_onResize() {
 }
 
 console_demo() {
-    printTitle 'Color demo' ${COLOR[white]}
+    printTitle 'Text colors demo' ${COLOR[white]}
     for color in ${COLORS[@]}; do
         printf "${COLOR[${color}]}${color^} ${COLOR[${color}l]}${color^} "
     done
     printf "${STYLE['normal']}\n"
-    
+
+    printTitle 'Text styles demo'
     printf "${STYLE[bold]}Bold${STYLE[dlob]} "
     printf "${STYLE[dim]}Dim${STYLE[mid]} "
     printf "${STYLE[under]}Underline${STYLE[rednu]} "

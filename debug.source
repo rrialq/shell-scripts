@@ -12,7 +12,7 @@ debug() {
     fi
     local levelValue=${DEBUG_LEVEL_VALUE[${level}]}
     if [ ${DEBUG_LEVEL} -ge ${levelValue} ]; then
-        printf '%s%-9s %s\n' ${color} "[${level}]" "${1}${STYLE[normal]}"
+        printf '%s%-9s%s\n' ${color} [${level}] "${1}${STYLE[normal]}"
     fi
 }
 
@@ -60,6 +60,7 @@ debugPrint() {
 }
 
 debug_demo() {
+    printTitle 'Debug levels demo'
     debugPrint DISABLED
     debugPrint ERROR
     debugPrint WARNING
