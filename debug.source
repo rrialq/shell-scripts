@@ -6,13 +6,15 @@
 debug() {
     local level=${2:-INFO}
     local color=${DEBUG_COLOR[${level}]}
-    if [ "${color}" = "" ]; then
+    if [ "${color}" = '' ]; then
         level=INFO
         color=${DEBUG_COLOR[INFO]}
     fi
-    local levelValue=${DEBUG_LEVEL_VALUE[${level}]}
-    if [ ${DEBUG_LEVEL} -ge ${levelValue} ]; then
-        printf '%s%-9s%s\n' ${color} [${level}] "${1}${STYLE[normal]}"
+    if ! [ "${level}" = DISABLED ]; then 
+        local levelValue=${DEBUG_LEVEL_VALUE[${level}]}
+        if [ ${DEBUG_LEVEL} -ge ${levelValue} ]; then
+            printf '%s%-10s%s\n' ${color} [${level}] "${1}${STYLE[normal]}"
+        fi
     fi
 }
 
@@ -51,29 +53,26 @@ debugPrint() {
     debugInfo "* DEBUG_LEVEL ${1}"
     debugLevel ${1}
     
-    debugError   '  + This is a message ERROR level'
-    debugWarning '  + This is a message WARNING level'
-    debugInfo    '  + This is a message INFO level'
-    debugFine    '  + This is a message FINE level'
-    debugFinest  '  + This is a message FINEST level'
+    for key in ${DEBUG_LEVELS[@]}; do
+        debug "  + This is a message ${key} level" ${key}
+    done
     DEBUG_LEVEL=${lastLevel}
 }
 
 debug_demo() {
     printTitle 'Debug levels demo'
-    debugPrint DISABLED
-    debugPrint ERROR
-    debugPrint WARNING
-    debugPrint INFO
-    debugPrint FINE
-    debugPrint FINEST
+    for key in ${DEBUG_LEVELS[@]}; do
+        debugPrint ${key}
+    done
 }
 
 
 if [ -z ${DEBUG_LOADED+x} ]; then
     declare -A DEBUG_COLOR
     declare -A DEBUG_LEVEL_VALUE
+    declare -a DEBUG_LEVELS=(DISABLED ERROR WARNING INFO FINE FINEST)
     DEBUG_LOADED=1
+    DEBUG_COLOR[DISABLED]=${DEBUG_ERROR_COLOR:-${COLOR[blackl]}}
     DEBUG_COLOR[ERROR]=${DEBUG_ERROR_COLOR:-${COLOR[red]}}
     DEBUG_COLOR[WARNING]=${DEBUG_WARNING_COLOR:-${COLOR[yellow]}}
     DEBUG_COLOR[INFO]=${DEBUG_INFO_COLOR:-${COLOR[green]}}
