@@ -1,0 +1,94 @@
+. ./console.source
+
+
+# $1 = Message
+# $2 = Debug level. Default=INFO.
+logger() {
+    local level=${2:-INFO}
+    local color=${LOGGER_COLOR[${level}]}
+    if [ "${color}" = '' ]; then
+        level=INFO
+        color=${LOGGER_COLOR[INFO]}
+    fi
+    if ! [ "${level}" = DISABLED ]; then 
+        local levelValue=${LOGGER_LEVEL_VALUE[${level}]}
+        if [ ${LOGGER_LEVEL} -ge ${levelValue} ]; then
+            printf ${LOGGER_FORMAT} ${color} [${level}] "${1}${STYLE[normal]}"
+        fi
+    fi
+}
+
+loggerError() {
+    logger "${1}" ERROR
+}
+
+loggerWarning() {
+    logger "${1}" WARNING
+}
+
+loggerInfo() {
+    logger "${1}" INFO
+}
+
+loggerFine() {
+    logger "${1}" FINE
+}
+
+debugFinest() {
+    logger "${1}" FINEST
+}
+
+# Sets the greatest level to print.
+# $1 = One of the available debug levels: ERROR, WARNING or INFO.
+loggerSetLevel() {
+    local level=${LOGGER_LEVEL_VALUE[${1}]}
+    if [ ${level+x} ]; then
+        LOGGER_LEVEL=${level}
+    fi
+}
+
+loggerSetFormat() {
+    local newFormat=${LOGGER_FORMATS[${1:-NORMAL}]}
+    if [ "${newFormat}" = '' ]; then
+        newFormat=${LOGGER_FORMATS[NORMAL]}
+    fi
+    LOGGER_FORMAT=${newFormat}
+}
+
+loggerDemoPrint() {
+    local lastLevel=${LOGGER_LEVEL}
+    loggerSetLevel INFO
+    loggerInfo "* LOGGER_LEVEL ${1}"
+    loggerSetLevel ${1}
+    
+    for key in ${LOGGER_LEVELS[@]}; do
+        logger "  + This is a message ${key} level" ${key}
+    done
+    LOGGER_LEVEL=${lastLevel}
+}
+
+loggerDemo() {
+    printTitle 'Debug levels demo'
+    for key in ${LOGGER_LEVELS[@]}; do
+        loggerDemoPrint ${key}
+    done
+}
+
+
+if [ -z ${LOGGER_LOADED+x} ]; then
+    declare -A LOGGER_COLOR=( \
+        [DISABLED]=${LOGGER_ERROR_COLOR:-${COLOR[blackl]}} \
+        [ERROR]=${LOGGER_ERROR_COLOR:-${COLOR[red]}} \
+        [WARNING]=${LOGGER_WARNING_COLOR:-${COLOR[yellow]}} \
+        [INFO]=${LOGGER_INFO_COLOR:-${COLOR[green]}} \
+        [FINE]=${LOGGER_FINE_COLOR:-${COLOR[cyan]}} \
+        [FINEST]=${LOGGER_FINEST_COLOR:-${COLOR[blue]}})
+    declare -A LOGGER_LEVEL_VALUE=([DISABLED]=-1 [ERROR]=0 [WARNING]=1 [INFO]=2 [FINE]=3 [FINEST]=4)
+    declare -A LOGGER_FORMATS=([NO_LEVEL]='%s%.s%s\n' [NORMAL]='%s%-10s%s\n')
+    declare -a LOGGER_LEVELS=(DISABLED ERROR WARNING INFO FINE FINEST)
+   
+    LOGGER_LOADED=1
+    
+    loggerSetFormat ${LOGGER_FORMAT:-NORMAL}
+    loggerSetLevel ${LOGGER_LEVEL:-INFO}
+fi
