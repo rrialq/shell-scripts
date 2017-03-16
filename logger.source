@@ -34,7 +34,7 @@ loggerFine() {
     logger "${1}" FINE
 }
 
-debugFinest() {
+loggerFinest() {
     logger "${1}" FINEST
 }
 
@@ -68,9 +68,14 @@ loggerDemoPrint() {
 }
 
 loggerDemo() {
-    printTitle 'Debug levels demo'
+    local expected=0
+    printTitle 'Logger levels tests'
     for key in ${LOGGER_LEVELS[@]}; do
-        loggerDemoPrint ${key}
+        local lines="`loggerDemoPrint ${key}`"
+        local count=$(( $(echo "${lines}" | wc -l) -1))
+        #printf "${lines}\n"
+        assertEquals "logger ${key}, printed ${count} lines" ${expected} ${count}
+        expected=$((${expected} + 1))
     done
 }
 

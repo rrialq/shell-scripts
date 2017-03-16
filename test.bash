@@ -5,10 +5,9 @@
 . ./word.source
 . ./test.source
 
-loggerWarning 'Depuración'
 
 filename='ss.b.jndi.create'
-loggerWarning "TestCase ${filename}"
+printTitle "TestCase ${filename}" ${COLOR[yellow]}
 assertEquals '  leftWord' 'ss' $(leftWord ${filename})
 assertEquals 'middleWord' 'b.jndi' $(middleWord ${filename})
 assertEquals ' rightWord' 'create' $(rightWord ${filename})
@@ -19,10 +18,8 @@ assertEquals '   nthWord' 'ss' $(nthWord ${filename})
 assertEquals 'nthWord  5' '' $(nthWord ${filename} 5)
 assertEquals 'nthWord -7' 'ss.b' $(nthWord ${filename} -7)
 
-printf "${SEPARATOR['normal']}"
-
 filename='ss-b-jndi-create'
-loggerWarning "TestCase ${filename}"
+printTitle "TestCase ${filename}" ${COLOR[yellow]}
 assertEquals '  leftWord' 'ss' $(leftWord ${filename} '-')
 assertEquals 'middleWord' 'b-jndi' $(middleWord ${filename} '-')
 assertEquals ' rightWord' 'create' $(rightWord ${filename} '-')

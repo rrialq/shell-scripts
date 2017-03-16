@@ -50,7 +50,7 @@ console_demo() {
     printf "${STYLE[under]}Underline${STYLE[rednu]} "
     printf "${STYLE[reverse]}Reverse${STYLE[esrever]} "
     printf "${STYLE[standout]}Standout${STYLE[tuodnats]} "
-    printf "${STYLE[normal]}Normal\n\n"
+    printf "${STYLE[normal]}Normal\n"
 }
 
 
