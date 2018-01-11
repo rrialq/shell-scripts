@@ -7,5 +7,5 @@ sed -i '1 i\Server = http://osl.ugr.es/archlinux/$repo/os/$arch' /etc/pacman.d/m
 sed -i '1 i\## Spain' /etc/pacman.d/mirrorlist
 
 pacman -Syu
-pacman -S git
+pacman -Sy git
 git clone https://github.com/rrialq/shell-scripts.git
