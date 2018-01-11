@@ -8,3 +8,4 @@ sed -i '1 i\## Spain' /etc/pacman.d/mirrorlist
 
 pacman -Syu
 pacman -S git
+git clone https://github.com/rrialq/shell-scripts.git
