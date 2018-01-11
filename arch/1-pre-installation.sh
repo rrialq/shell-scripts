@@ -2,7 +2,7 @@
 
 . ./configuration
 
-exec >> ${LOG_FILENAME} 2>&1
+exec 2> ${LOG_FILENAME}
 
 setTheKeyboardLayout() {
     echo '1.1 Set the keyboard layout'
@@ -34,9 +34,9 @@ partitionTheDisks() {
 formatThePartitions() {
     echo '1.6 Format the partitions'
     echo '    * Formatting /dev/sda2'
-    mkfs.xfs /dev/sda2
+    mkfs.xfs -f /dev/sda2
     echo '    * Formatting /dev/sda3'
-    mkfs.xfs /dev/sda3
+    mkfs.xfs -f /dev/sda3
 }
 
 mountThePartitions() {
