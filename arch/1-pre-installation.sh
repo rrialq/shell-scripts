@@ -9,7 +9,7 @@ setTheKeyboardLayout() {
 
 connectToTheInternet() {
     echo '1.3 Connect to the Internet'
-    ping archlinux.org > ${LOG_FILENAME} 2>&1
+    ping -c1 archlinux.org > ${LOG_FILENAME} 2>&1
 }
 
 updateTheSystemClock() {
@@ -24,9 +24,9 @@ partitionTheDisks() {
     echo '    * Creating /Bios boot partition: 2M'
     echo ',2M,21686148-6449-6E6F-744E-656564454649,*' | sfdisk /dev/sda > ${LOG_FILENAME} 2>&1
     echo '    * Creating /boot partition: 1512M'
-    echo ',1512M' | sfdisk /dev/sda > ${LOG_FILENAME} 2>&1
+    echo ',1512M' | sfdisk -a /dev/sda > ${LOG_FILENAME} 2>&1
     echo '    * Creating / partition: The rest of the disk'
-    echo ',,' | sfdisk /dev/sda > ${LOG_FILENAME} 2>&1
+    echo ',,' | sfdisk -a /dev/sda > ${LOG_FILENAME} 2>&1
 }
 
 formatThePartitions() {
