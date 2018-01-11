@@ -39,7 +39,7 @@ formatThePartitions() {
     mkfs.xfs -f /dev/sda3
 }
 
-mountThePartitions() {
+mountTheFileSystems() {
     echo '1.7 Mount the partitions'
     mount /dev/sda3 /mnt 
     mkdir /mnt/boot
