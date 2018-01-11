@@ -15,3 +15,13 @@ fstab() {
     title '3.1 Generate an fstab file by UUID'
     genfstab -U /mnt >> /mnt/etc/fstab
 }
+
+doChroot() {
+    title 'Change root into the new system'
+    arch-chroot /mnt
+}
+
+title '3 Configure the system'
+
+fstab \
+&& doChroot \
