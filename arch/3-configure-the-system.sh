@@ -1,5 +1,5 @@
 #!/bin/bash
-. ./configure
+. ./configuration
 
 fstab() {
     title '3.1 Generate an fstab file by UUID'
@@ -8,9 +8,10 @@ fstab() {
 
 doChroot() {
     title '3.2 Change root into the new system'
-    title '    * Copying configure to /mnt/root' \
-    && cp ./configure /mnt/root \
+    title '    * Copying configuration to /mnt/root' \
+    && cp ./configuration /mnt/root \
     && title '    * Copying 3.1-into-chroot.sh to /mnt/root' \
+    && cp ./3.1-into-chroot.sh /mnt/root \
     && arch-chroot /mnt /root/3.1-into-chroot.sh
 }
 
