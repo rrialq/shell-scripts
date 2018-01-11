@@ -18,15 +18,10 @@ fstab() {
 
 doChroot() {
     title '3.2 Change root into the new system'
-    title '3.3 Time zone'
-    arch-chroot /mnt ln -sf /usr/share/zoneinfo/Europe/Madrid /etc/localtime \
-    && arch-chroot /mnt hwclock --systohc \ 
-    && title '3.4 Locale \
-    && arch-chroot /mnt ( sed -i 's/#es_ES.UTF-8 UTF-8/es_ES.UTF-8 UTF-8/' /etc/locale.gen ) \
-    && arch-chroot /mnt ( sed -i 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen ) \
-    && arch-chroot /mnt locale-gen &&
-    && arch-chroot /mnt ( echo "LANG=es_ES.UTF-8" > /etc/locale.conf ) \
-    && arch-chroot /mnt echo "KEYMAP=es" > /etc/vconsole.conf
+    title '    * Copying configure to /mnt/root' \
+    && cp ./configure /mnt/root \
+    && title '    * Copying 3.1-into-chroot.sh to /mnt/root' \
+    && arch-chroot /mnt /root/3.1-into-chroot.sh
 }
 
 title '3 Configure the system'
