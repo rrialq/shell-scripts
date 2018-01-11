@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# Not necessary, since contained in 0-scripts-download.sh
 selectTheMirrors() {
     printf '2.1 Select the mirrors '
     # Customize the order of mirrorlist for Spain
@@ -14,4 +15,4 @@ installTheBasePackages() {
     pacstrap /mnt base
 }
 
-selectTheMirrors && installTheBasePackages
+installTheBasePackages
