@@ -2,13 +2,6 @@
 
 . ./configuration
 
-exec 3>&1
-exec &> ${LOG_FILENAME}
-
-title() {
-    echo "$@" >&3
-}
-
 
 setTheKeyboardLayout() {
     title '1.1 Set the keyboard layout'
