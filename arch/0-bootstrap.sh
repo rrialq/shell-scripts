@@ -11,5 +11,4 @@ sed -i '1 i\Server = http://ftp.rediris.es/mirror/archlinux/$repo/os/$arch' /etc
 && yes | pacman -S unzip \
 && wget https://github.com/rrialq/shell-scripts/archive/master.zip \
 && unzip master.zip \
-&& cd ${HOME}/shell-scripts-master/arch \
-&& chmod +x *sh
+&& chmod +x ${HOME}/shell-scripts-master/arch/*sh
