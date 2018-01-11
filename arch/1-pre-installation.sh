@@ -2,12 +2,11 @@
 
 . ./configuration
 
-
-exec 2> ${LOG_FILENAME}
 exec 3>&1
+exec 2> ${LOG_FILENAME}
 
 title() {
-    echo ${1} >&3
+    echo "$@" >&3
 }
 
 
