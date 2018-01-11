@@ -3,7 +3,7 @@
 . ./configuration
 
 exec 3>&1
-exec 2> ${LOG_FILENAME}
+exec &> ${LOG_FILENAME}
 
 title() {
     echo "$@" >&3
