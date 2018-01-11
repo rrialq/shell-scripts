@@ -22,18 +22,18 @@ partitionTheDisks() {
     echo      * Creating GPT Partition table'
     echo "label: gpt" | sfdisk /dev/sda
     echo '    * Creating /Bios boot partition: 2M'
-    echo ',2M,21686148-6449-6E6F-744E-656564454649,*\n,1512M\n,,' | sfdisk /dev/sda > ${LOG_FILENAME} 2>&1
+    echo ',2M,21686148-6449-6E6F-744E-656564454649,*' | sfdisk /dev/sda > ${LOG_FILENAME} 2>&1
     echo '    * Creating /boot partition: 1512M'
-    echo ',2M,21686148-6449-6E6F-744E-656564454649,*\n,1512M\n,,' | sfdisk /dev/sda > ${LOG_FILENAME} 2>&1
+    echo ',1512M' | sfdisk /dev/sda > ${LOG_FILENAME} 2>&1
     echo '    * Creating / partition: The rest of the disk'
-    echo ',2M,21686148-6449-6E6F-744E-656564454649,*\n,1512M\n,,' | sfdisk /dev/sda > ${LOG_FILENAME} 2>&1
+    echo ',,' | sfdisk /dev/sda > ${LOG_FILENAME} 2>&1
 }
 
 formatThePartitions() {
     echo '1.6 Format the partitions'
-    echo '    * Formatting /dev/sda2 (/boot)'
+    echo '    * Formatting /dev/sda2'
     mkfs.xfs /dev/sda2 > ${LOG_FILENAME} 2>&1
-    echo '    * Formatting /dev/sda3 (/)'
+    echo '    * Formatting /dev/sda3'
     mkfs.xfs /dev/sda3 > ${LOG_FILENAME} 2>&1
 }
 
