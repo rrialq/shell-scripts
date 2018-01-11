@@ -19,7 +19,7 @@ updateTheSystemClock() {
 
 partitionTheDisks() {
     echo '1.5 Partition the disks'
-    echo      * Creating GPT Partition table'
+    echo '    * Creating GPT Partition table'
     echo "label: gpt" | sfdisk /dev/sda
     echo '    * Creating /Bios boot partition: 2M'
     echo ',2M,21686148-6449-6E6F-744E-656564454649,*' | sfdisk /dev/sda > ${LOG_FILENAME} 2>&1
