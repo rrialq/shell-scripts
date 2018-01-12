@@ -2,7 +2,7 @@
 
 cd ${HOME}
 . ./configuration
-title '3.2 Change root into the new system'
+title '    * Changed root to the new system'
 title '3.3 Time zone'
 ln -sf /usr/share/zoneinfo/Europe/Madrid /etc/localtime \
 && hwclock --systohc \
