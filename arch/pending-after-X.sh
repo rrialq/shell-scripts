@@ -1,0 +1,8 @@
+&& echo 'Section "InputClass"
+    Identifier "system-keyboard"
+	  MatchIsKeyboard "on"
+	  Option "XkbLayout"  "es,us"
+    Option "XkbModel"   "pc104"
+    Option "XkbVariant" "deadtilde,dvorak"
+    Option "XkbOptions" "grp:alt_shift_toggle"
+EndSection' >> /etc/X11/xorg.conf.d/10-keyboard.conf \
