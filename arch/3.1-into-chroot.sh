@@ -17,12 +17,13 @@ ln -sf /usr/share/zoneinfo/Europe/Madrid /etc/localtime \
 && echo "LANG=es_ES.UTF-8" > /etc/locale.conf \
 && title '    * Setting KEYMAP' \
 && echo "KEYMAP=es" > /etc/vconsole.conf \
-&& title '    * Creating 10-keyboard.conf' \
 && title '3.5 Hostname' \
 && echo "127.0.0.1\tlocalhost.localdomain\tlocalhost\n::1\tlocalhost.localdomain\tlocalhost\n127.0.1.1\tEuropa.vialactea.local\tEuropa" >> /etc/hosts \
 && title '3.6 Network configuration' \
+&& title '3.7 Initramfs' \
+&& title '3.8 Root password' \
 && title '3.9 Bootloader' \
 && title '    * Installing grub' \
 && grub-install --target=i386-pc --root-directory /mnt /dev/sda \
-&& title '    * Creando configuración' \
+&& title '    * Creating grub configuration' \
 && grub-mkconfig -o /boot/grub/grub.cfg
