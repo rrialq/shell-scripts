@@ -12,5 +12,5 @@ printTitle() {
 }
 
 printOption() {
-    echo "      * ${@}" > &3
+    echo "      * ${@}" >&3
 }
