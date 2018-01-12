@@ -12,7 +12,7 @@ selectTheMirrors() {
 
 installTheBasePackages() {
     printf '2.2 Install the base packages '
-    pacstrap /mnt base
+    pacstrap /mnt base grub sudo
 }
 
 installTheBasePackages
