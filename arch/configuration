@@ -1,6 +1,7 @@
 LOG_FILENAME=${HOME}/arch-install.log
 
-if [ -t 1 ]; then
+# Check if we are not in chroot
+if [ "$(stat -c %d:%i /)" = "$(stat -c %d:%i /proc/1/root/.)" ]; then
     exec 3>&1
     exec &> ${LOG_FILENAME}
 fi
