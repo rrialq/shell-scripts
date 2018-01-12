@@ -18,14 +18,6 @@ ln -sf /usr/share/zoneinfo/Europe/Madrid /etc/localtime \
 && title '    * Setting KEYMAP' \
 && echo "KEYMAP=es" > /etc/vconsole.conf \
 && title '    * Creating 10-keyboard.conf' \
-&& echo 'Section "InputClass"
-    Identifier "system-keyboard"
-	  MatchIsKeyboard "on"
-	  Option "XkbLayout"  "es,us"
-    Option "XkbModel"   "pc104"
-    Option "XkbVariant" "deadtilde,dvorak"
-    Option "XkbOptions" "grp:alt_shift_toggle"
-EndSection' >> /etc/X11/xorg.conf.d/10-keyboard.conf \
 && title '3.5 Hostname' \
 && echo "127.0.0.1\tlocalhost.localdomain\tlocalhost\n::1\tlocalhost.localdomain\tlocalhost\n127.0.1.1\tEuropa.vialactea.local\tEuropa" >> /etc/hosts \
 && title '3.6 Network configuration' \
