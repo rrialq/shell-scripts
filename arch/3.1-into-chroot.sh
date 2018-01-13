@@ -27,3 +27,4 @@ ln -sf /usr/share/zoneinfo/Europe/Madrid /etc/localtime \
 && grub-install --target=i386-pc /dev/sda \
 && title '    * Creating grub configuration' \
 && grub-mkconfig -o /boot/grub/grub.cfg
+&& title "\n${0} OK\n"
