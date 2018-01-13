@@ -1,0 +1,11 @@
+intel-ucode
+openssh
+xorg
+xorg-server
+xorg-apps
+lightdm
+lightdm-gtk-greeter
+mate
+mate-extra
+mate-settings-daemon
+numlockx
