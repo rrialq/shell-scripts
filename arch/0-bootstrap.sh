@@ -21,4 +21,6 @@ loadkeys es \
 && chmod +x ${HOME}/shell-scripts-master/arch/*sh \
 && printf "\n${0} OK\n" \
 && cd ${HOME}/shell-scripts-master/arch \
-&& ./1-pre-installation.sh
+&& ./1-pre-installation.sh \
+&& ./2-Installation.sh \
+&& ./3-configure-the-system.sh
