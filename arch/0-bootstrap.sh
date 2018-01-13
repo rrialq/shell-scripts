@@ -19,4 +19,4 @@ loadkeys es \
 && wget https://github.com/rrialq/shell-scripts/archive/master.zip \
 && unzip master.zip \
 && chmod +x ${HOME}/shell-scripts-master/arch/*sh \
-&& title '\n${0} OK\n' 
+&& printf '\n${0} OK\n' 
