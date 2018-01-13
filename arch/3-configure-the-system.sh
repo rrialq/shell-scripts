@@ -7,7 +7,7 @@ fstab() {
 }
 
 doChroot() {
-    title '3.2 Change root into the new system'
+    title '3.2 Change root into the new system' \
     && title '    * Copying shell-scripts to /mnt/root' \
     && cp -R ./*.sh /mnt/root \
     && arch-chroot /mnt /root/3.1-into-chroot.sh
