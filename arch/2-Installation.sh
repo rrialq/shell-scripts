@@ -1,5 +1,7 @@
 #!/bin/sh
 
+. ./configuration
+
 # Not necessary, since contained in 0-scripts-download.sh
 selectTheMirrors() {
     printf '2.1 Select the mirrors '
@@ -15,4 +17,5 @@ installTheBasePackages() {
     pacstrap /mnt base grub intel-ucode sudo
 }
 
-installTheBasePackages
+installTheBasePackages \
+&& title "\n${0} OK\n"
