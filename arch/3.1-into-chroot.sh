@@ -1,7 +1,21 @@
 #!/bin/bash
 
+. ${HOME}/configuration
+
+PROFILE_NAME=${PROFILE_NAME:-'dhcp'}
+NET_IP=${NET_IP:-'static'}
+[ "${PROFILE_NAME}" = 'dhcp' ] && NET_IP='dhcp'
+
+doNetworkConfiguration() {
+    title '3.6 Network configuration' \
+    && title '    * Copying ${PROFILE_NAME} to /etc/netctl/enp0s3' \
+    && cp "netctl/${PROFILE_NAME}" /etc/netctl/enp0s3 \
+    && [ "${NET_IP} = "dhcp" ] && ( title '    * Disabling dhcp' && systemctl disable dhcpcd ) \
+    ; netctl enable enp0s3 && netctl start enp0s3
+}
+
 cd ${HOME}
-. ./configuration
+
 title '3.2 Change root into the new system'
 title '3.3 Time zone'
 ln -sf /usr/share/zoneinfo/Europe/Madrid /etc/localtime \
@@ -19,9 +33,7 @@ ln -sf /usr/share/zoneinfo/Europe/Madrid /etc/localtime \
 && echo "KEYMAP=es" > /etc/vconsole.conf \
 && title '3.5 Hostname' \
 && echo "127.0.0.1\tlocalhost.localdomain\tlocalhost\n::1\tlocalhost.localdomain\tlocalhost\n127.0.1.1\tEuropa.vialactea.local\tEuropa" >> /etc/hosts \
-&& title '3.6 Network configuration' \
-&& title '    * Creating configuration for dhcp' \
-&& cp /etc/netctl/examples/ethernet-dhcp /etc/netctl/enp0s3 \
+&& doNetworkConfiguration \
 && title '    * Enabling netctl enp0s3' \
 && sudo netctl enable enp0s3 \
 && title '3.7 Initramfs' \
