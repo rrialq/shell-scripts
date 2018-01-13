@@ -24,6 +24,6 @@ ln -sf /usr/share/zoneinfo/Europe/Madrid /etc/localtime \
 && title '3.8 Root password' \
 && title '3.9 Bootloader' \
 && title '    * Installing grub' \
-&& grub-install --target=i386-pc --root-directory /mnt /dev/sda \
+&& grub-install --target=i386-pc /dev/sda \
 && title '    * Creating grub configuration' \
 && grub-mkconfig -o /boot/grub/grub.cfg
