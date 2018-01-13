@@ -19,4 +19,6 @@ loadkeys es \
 && wget https://github.com/rrialq/shell-scripts/archive/master.zip \
 && unzip master.zip \
 && chmod +x ${HOME}/shell-scripts-master/arch/*sh \
-&& printf "\n${0} OK\n"
+&& printf "\n${0} OK\n" \
+&& cd ${HOME}/shell-scripts-master/arch \
+&& ./1-pre-installation.sh
