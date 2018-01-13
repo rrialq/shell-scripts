@@ -11,7 +11,6 @@ selectTheMirrors() {
 
 cd ${HOME}
 rm -Rf ${HOME}/shell-scripts-master
-export LC_ALL=es_ES.UTF-8
 loadkeys es \
 && selectTheMirrors \
 && pacman -Sy \
