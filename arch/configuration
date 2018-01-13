@@ -1,5 +1,4 @@
 LOG_FILENAME=${HOME}/arch-install
-IP_ADDRESS='192.168.0.220'
 HOSTNAME='Europa'
 DOMAIN='vialactea.local'
 HOSTNAME_FQDN='${HOSTNAME}.${vialactea.local}'
