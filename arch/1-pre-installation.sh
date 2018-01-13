@@ -51,5 +51,5 @@ setTheKeyboardLayout \
 && updateTheSystemClock \
 && partitionTheDisks \
 && formatThePartitions \
-&& mountTheFileSystems º
+&& mountTheFileSystems \
 && printf "\n${0} OK\n"
