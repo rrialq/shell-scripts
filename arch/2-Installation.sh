@@ -13,7 +13,7 @@ selectTheMirrors() {
 }
 
 installTheBasePackages() {
-    printf '2.2 Install the base packages '
+    title '2.2 Install the base packages '
     pacstrap /mnt base grub intel-ucode sudo
 }
 
