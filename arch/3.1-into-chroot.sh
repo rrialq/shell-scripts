@@ -10,7 +10,7 @@ doNetworkConfiguration() {
     title '3.6 Network configuration' \
     && title '    * Copying ${PROFILE_NAME} to /etc/netctl/enp0s3' \
     && cp "netctl/${PROFILE_NAME}" /etc/netctl/enp0s3 \
-    && [ "${NET_IP} = "dhcp" ] && ( title '    * Disabling dhcp' && systemctl disable dhcpcd ) \
+    && [ "${NET_IP}" = 'dhcp' ] && ( title '    * Disabling dhcp' && systemctl disable dhcpcd ) \
     ; netctl enable enp0s3 && netctl start enp0s3
 }
 
