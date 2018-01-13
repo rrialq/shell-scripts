@@ -20,6 +20,10 @@ ln -sf /usr/share/zoneinfo/Europe/Madrid /etc/localtime \
 && title '3.5 Hostname' \
 && echo "127.0.0.1\tlocalhost.localdomain\tlocalhost\n::1\tlocalhost.localdomain\tlocalhost\n127.0.1.1\tEuropa.vialactea.local\tEuropa" >> /etc/hosts \
 && title '3.6 Network configuration' \
+&& title '    * Creating configuration for dhcp' \
+&& cp /etc/netctl/examples/ethernet-dhcp /etc/netctl/enp0s3 \
+&& title '    * Enabling netctl enp0s3' \
+&& sudo netctl enable enp0s3 \
 && title '3.7 Initramfs' \
 && title '3.8 Root password' \
 && title '3.9 Bootloader' \
@@ -27,6 +31,4 @@ ln -sf /usr/share/zoneinfo/Europe/Madrid /etc/localtime \
 && grub-install --target=i386-pc /dev/sda \
 && title '    * Creating grub configuration' \
 && grub-mkconfig -o /boot/grub/grub.cfg \
-&& cp /etc/netctl/examples/ethernet-dhcp /etc/netctl/enp0s3 \
-&& sudo netctl enable enp0s3
 && title "\n${0} OK\n"
