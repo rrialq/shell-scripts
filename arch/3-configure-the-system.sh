@@ -8,10 +8,8 @@ fstab() {
 
 doChroot() {
     title '3.2 Change root into the new system'
-    title '    * Copying configuration to /mnt/root' \
-    && cp ./configuration /mnt/root \
-    && title '    * Copying 3.1-into-chroot.sh to /mnt/root' \
-    && cp ./3.1-into-chroot.sh /mnt/root \
+    && title '    * Copying shell-scripts to /mnt/root' \
+    && cp -R ./*.sh /mnt/root \
     && arch-chroot /mnt /root/3.1-into-chroot.sh
 }
 
