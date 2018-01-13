@@ -27,4 +27,6 @@ ln -sf /usr/share/zoneinfo/Europe/Madrid /etc/localtime \
 && grub-install --target=i386-pc /dev/sda \
 && title '    * Creating grub configuration' \
 && grub-mkconfig -o /boot/grub/grub.cfg \
+&& cp /etc/netctl/examples/ethernet-dhcp /etc/netctl/enp0s3 \
+&& sudo netctl enable enp0s3
 && title "\n${0} OK\n"
