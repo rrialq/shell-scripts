@@ -6,6 +6,8 @@ title 'Virtualbox Guest Additions installing...' \
 && sudo modprobe -a vboxguest vboxsf vboxvideo \
 && title '* Creating virtualbox.conf' \
 && sudo echo 'vboxguest\nvboxsf\nvboxvideo' > ${CONF_FILENAME} \
-&& title '* Enabling modules' \
+&& title '* Enabling virtualbox service' \
+&& sudo systemctl enable vboxservice \
+&& title '* Enabling modules for this session' \
 && VBoxClient-all \
 && printf '\r[OK   ]\n' || printf '\r[ERROR]\n'
